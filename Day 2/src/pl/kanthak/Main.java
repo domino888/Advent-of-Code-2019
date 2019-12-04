@@ -1,25 +1,36 @@
 package pl.kanthak;
 
-public class Main {
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
+public class Main {
     public static void main(String[] args) {
 
-        List<Integer> integerList = new ArrayList<>();
-        readLineFromConsole(integerList);
+        Integer[] integerArray = readNumbersFromConsole();
 
-        for (int i = 0; i < integerList.size(); i += 4){
-            switch (integerList.get(i)) {
+        for (int i = 0; i < integerArray.length; i += 4) {
+
+            switch (integerArray[i]) {
                 case 1: {
-                     integerList.get(integerList.get(i+3)) =  integerList.get(integerList.get(i+1)) + integerList.get(integerList.get(i+2));
-
+                    integerArray[integerArray[i + 3]] = integerArray[integerArray[i + 1]] + integerArray[integerArray[i + 2]];
+                    break;
                 }
-                case 2: //pomnoz;
-                case 99: //end
+                case 2: {
+                    integerArray[integerArray[i + 3]] = integerArray[integerArray[i + 1]] * integerArray[integerArray[i + 2]];
+                    break;
+                }
+                case 99:
+                    break;
             }
         }
+        for (Integer integer : integerArray) {
+            System.out.println(integer);
+        }
+        System.out.println(integerArray[0]);
     }
 
-    public static void readLineFromConsole(List<Integer> integerList) {
+    static public Integer[] readNumbersFromConsole() {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String line = null;
 
@@ -30,9 +41,11 @@ public class Main {
         }
 
         String[] lineWithoutCommas = line.trim().split(",");
+        Integer[] integerArray = new Integer[lineWithoutCommas.length];
 
-        for (String number : lineWithoutCommas) {
-            integerList.add(Integer.parseInt(number));
+        for (int i = 0; i < lineWithoutCommas.length; i++) {
+            integerArray[i] = Integer.parseInt(lineWithoutCommas[i]);
         }
+        return integerArray;
     }
 }
