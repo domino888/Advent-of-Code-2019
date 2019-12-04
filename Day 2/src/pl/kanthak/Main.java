@@ -6,8 +6,17 @@ public class Main {
 
         List<Integer> integerList = new ArrayList<>();
         readLineFromConsole(integerList);
-        integerList.stream()
-                .forEach(System.out::println);
+
+        for (int i = 0; i < integerList.size(); i += 4){
+            switch (integerList.get(i)) {
+                case 1: {
+                     integerList.get(integerList.get(i+3)) =  integerList.get(integerList.get(i+1)) + integerList.get(integerList.get(i+2));
+
+                }
+                case 2: //pomnoz;
+                case 99: //end
+            }
+        }
     }
 
     public static void readLineFromConsole(List<Integer> integerList) {
