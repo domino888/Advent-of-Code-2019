@@ -13,6 +13,7 @@ public class Stage1 {
         List<List<Position>> listOfPositionList = new ArrayList<>();
         List<Integer> distancesFromCenterPoint = new ArrayList<>();
 
+
         for (int counter = 0; counter < 2; counter++) {
             Position positionOfWire = new Position(0, 0);
             List<Path> listPathsOfWire = getPaths();
@@ -21,7 +22,7 @@ public class Stage1 {
                 switch (path.getDirection()) {
                     case 'R': {
                         for (int i = 0; i < path.getDistance(); i++) {
-                            Integer oldX = positionOfWire.getPositionX();
+                            int oldX = positionOfWire.getPositionX();
                             positionOfWire.setPositionX(oldX + 1);
                                                                                                                                                                           listPositionsOfWire.add(new Position(positionOfWire.getPositionX(), positionOfWire.getPositionY()));
                         }
@@ -29,7 +30,7 @@ public class Stage1 {
                     }
                     case 'L': {
                         for (int i = 0; i < path.getDistance(); i++) {
-                            Integer oldX = positionOfWire.getPositionX();
+                            int oldX = positionOfWire.getPositionX();
                             positionOfWire.setPositionX(oldX - 1);
                             listPositionsOfWire.add(new Position(positionOfWire.getPositionX(), positionOfWire.getPositionY()));
                         }
@@ -37,7 +38,7 @@ public class Stage1 {
                     }
                     case 'U': {
                         for (int i = 0; i < path.getDistance(); i++) {
-                            Integer oldY = positionOfWire.getPositionY();
+                            int oldY = positionOfWire.getPositionY();
                             positionOfWire.setPositionY(oldY + 1);
                             listPositionsOfWire.add(new Position(positionOfWire.getPositionX(), positionOfWire.getPositionY()));
                         }
@@ -45,7 +46,7 @@ public class Stage1 {
                     }
                     case 'D': {
                         for (int i = 0; i < path.getDistance(); i++) {
-                            Integer oldY = positionOfWire.getPositionY();
+                            int oldY = positionOfWire.getPositionY();
                             positionOfWire.setPositionY(oldY - 1);
                             listPositionsOfWire.add(new Position(positionOfWire.getPositionX(), positionOfWire.getPositionY()));
                         }
@@ -67,6 +68,7 @@ public class Stage1 {
                 .mapToInt(v -> v)
                 .min()
                 .getAsInt());
+
     }
 
 

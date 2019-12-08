@@ -4,27 +4,22 @@ import java.util.Objects;
 
 public class Position {
 
-    private Integer positionX;
-    private Integer positionY;
+    private int positionX;
+    private int positionY;
 
-    public Integer getPositionX() {
+    public int getPositionX() {
         return positionX;
     }
 
-    public void setPositionX(Integer positionX) {
+    public void setPositionX(int positionX) {
         this.positionX = positionX;
     }
 
-    public Integer getPositionY() {
+    public int getPositionY() {
         return positionY;
     }
 
-    public void setPositionY(Integer positionY) {
-        this.positionY = positionY;
-    }
-
-    public Position(Integer positionX, Integer positionY) {
-        this.positionX = positionX;
+    public void setPositionY(int positionY) {
         this.positionY = positionY;
     }
 
@@ -36,13 +31,18 @@ public class Position {
                 '}';
     }
 
+    public Position(int positionX, int positionY) {
+        this.positionX = positionX;
+        this.positionY = positionY;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Position)) return false;
         Position position = (Position) o;
-        return getPositionX().equals(position.getPositionX()) &&
-                getPositionY().equals(position.getPositionY());
+        return getPositionX() == position.getPositionX() &&
+                getPositionY() == position.getPositionY();
     }
 
     @Override
