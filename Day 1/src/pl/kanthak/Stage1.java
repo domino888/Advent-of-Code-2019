@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class Stage1 {
 
     public static void main(String[] args) {
 
@@ -19,8 +19,7 @@ public class Main {
         }
 
         for (Integer mass : massOfModules) {
-            // mass = mass/3 - 2;            // Part ONE
-            mass = calculateFuel(mass);             // Part TWO
+            mass = mass / 3 - 2;
             neededFuels.add(mass);
         }
 
@@ -31,15 +30,4 @@ public class Main {
         System.out.println(fuelRequirements);
     }
 
-    static public Integer calculateFuel(Integer mass) {
-        Integer sumOfMass = 0;
-        while (mass > 0) {
-            mass = mass / 3 - 2;
-            if(mass == -2 || mass == -1){
-                mass = 0;
-            }
-            sumOfMass += mass;
-        }
-        return sumOfMass;
-    }
 }
