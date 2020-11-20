@@ -27,6 +27,7 @@ public class Stage2 {
                     if (integerArray[0] == 19690720) {
                         System.out.println("noun= " + noun);
                         System.out.println("verb= " + (verb - 1));        // subtract 1, because in for loop verb is increased by 1
+                        System.out.println("searched value=" + (100 * noun + verb - 1));
                         return;
                     }
                 }

@@ -30,3 +30,19 @@ Day 4/.idea/vcs.xml
 Day 4/out/production/Day 4/META-INF/Day 4.kotlin_module
 Day 4/out/production/Day 4/pl/kanthak/Main.class
 Day 4/out/production/Day 4/pl/kanthak/Main2.class
+.idea/.gitignore
+.idea/Advent of Code.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+Day 1/.idea/Day 1.iml
+Day 3/Day 3.iml
+out/production/Day 2/pl/kanthak/Stage1.class
+out/production/Day 2/pl/kanthak/Stage2.class
+out/production/Day 3/pl/kanthak/Path.class
+out/production/Day 3/pl/kanthak/Position.class
+out/production/Day 3/pl/kanthak/Stage1.class
+out/production/Day 3/pl/kanthak/Stage2.class
+out/production/Day 4/pl/kanthak/Stage1.class
+out/production/Day 4/pl/kanthak/Stage2.class
+out/production/Day 5/pl/kanthak/Stage1.class
