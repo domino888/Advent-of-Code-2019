@@ -13,7 +13,7 @@ public class Stage1 {
         Scanner scanner = new Scanner(System.in);
         int[] integerArray = readNumbersFromConsole();
 
-        for (int i = 0; i < integerArray.length; i += pointer) {
+        loop: for (int i = 0; i < integerArray.length; i += pointer) {
             int[] instructionArray = returnInstructionArray(integerArray[i]);
             int parameterMode1 = instructionArray[2];
             int parameterMode2 = instructionArray[1];
@@ -69,7 +69,7 @@ public class Stage1 {
                     break;
                 }
                 case 99:
-                    return;
+                    break loop;
             }
         }
     }
