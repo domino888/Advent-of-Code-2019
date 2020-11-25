@@ -57,3 +57,8 @@ Day 5/.idea/vcs.xml
 Day 5/Day 5.iml
 Day 5/src/pl/kanthak/Test.java
 out/production/Day 5/pl/kanthak/Stage2.class
+.idea/prog.iml
+.idea/workspace.xml
+Day 6/Day 6.iml
+out/production/Day 6/kanthak/pl/Planet.class
+out/production/Day 6/kanthak/pl/Stage1.class
