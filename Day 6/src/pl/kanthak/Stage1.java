@@ -1,4 +1,4 @@
-package kanthak.pl;
+package pl.kanthak;
 
 import java.util.*;
 
@@ -18,7 +18,6 @@ public class Stage1 {
             splitArray = s.split("\\)");
             planetsMap.get(splitArray[0]).addChild(planetsMap.get(splitArray[1]));
         }
-        System.out.println("Total number of orbits: " + planetsMap.get("COM").getListSize(1));
     }
 
     static public List<String> readDataFromConsole() {
