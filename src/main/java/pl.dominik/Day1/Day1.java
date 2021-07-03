@@ -1,4 +1,4 @@
-package pl.kanthak.code.Day1;
+package main.java.pl.dominik.Day1;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,12 +16,12 @@ public class Day1 {
     public void execute() throws IOException {
         loadData();
         System.out.println("Day 1: ");
-        System.out.println("Part 1 result: " + calculateFuel1(massOfModules));
-        System.out.println("Part 2 result: " + calculateFuel2(massOfModules));
+        System.out.println("Part One result: " + calculateFuel1(massOfModules));
+        System.out.println("Part Two result: " + calculateFuel2(massOfModules));
     }
 
     private static void loadData() throws IOException {
-        Path path = Paths.get("Advent of Code 2019/data/Day1/data.txt");
+        Path path = Paths.get("src/main/resources/Day1/data.txt");
         BufferedReader reader = Files.newBufferedReader(path);
         String line;
         while ((line = reader.readLine()) != null) {

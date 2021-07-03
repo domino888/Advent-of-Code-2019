@@ -1,10 +1,13 @@
-package pl.kanthak.test.Day1;
+package Day1;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import main.java.pl.dominik.Day1.Day1;
 import org.junit.jupiter.api.Test;
-import pl.kanthak.code.Day1.Day1;
+
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class Day1Test {
 
