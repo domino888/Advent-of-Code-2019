@@ -3,6 +3,7 @@ package main.java;
 import main.java.pl.dominik.Day1.Day1;
 import main.java.pl.dominik.Day2.Day2;
 import main.java.pl.dominik.Day3.Day3;
+import main.java.pl.dominik.Day4.Day4;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -22,6 +23,9 @@ public class Main {
                     break;
                 case "3":
                     executeDay3();
+                    break;
+                case "4":
+                    executeDay4();
                     break;
                 case "q":
                     return;
@@ -44,5 +48,9 @@ public class Main {
     private static void executeDay3() throws IOException {
         Day3 day3 = new Day3();
         day3.execute();
+    }
+    private static void executeDay4() throws IOException {
+        Day4 day4 = new Day4();
+        day4.execute();
     }
 }
