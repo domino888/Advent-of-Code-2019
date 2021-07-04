@@ -93,3 +93,9 @@ out/production/Advent of Code/main/resources/Day1/data.txt
 out/production/Advent of Code/main/resources/Day2/data.txt
 out/test/Advent of Code/Day1/Day1Test.class
 out/test/Advent of Code/Day2/Day2Test.class
+out/production/Advent of Code/Day3/data.txt
+out/production/Advent of Code/main/java/pl/dominik/Day3/Day3.class
+out/production/Advent of Code/main/java/pl/dominik/Day3/Path.class
+out/production/Advent of Code/main/java/pl/dominik/Day3/Position.class
+out/production/Advent of Code/main/resources/Day3/data.txt
+out/test/Advent of Code/Day3/Day3Test.class

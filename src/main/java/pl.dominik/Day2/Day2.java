@@ -10,7 +10,6 @@ import java.util.List;
 
 public class Day2 {
 
-
     public void execute() throws IOException {
         Integer[] integerArray = readNumberFromFile();
         integerArray[1] = 12;
