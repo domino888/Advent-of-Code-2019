@@ -139,7 +139,6 @@ public class Day3 {
             positionOfWire.setPositionY(0);
             pathDimension = 0;
         }
-
         for (Position intersectionPosition1 : listOfPathsDimensionMap.get(0).keySet()) {
             for (Position intersectionPosition2 : listOfPathsDimensionMap.get(1).keySet()) {
                 if (intersectionPosition1.equals(intersectionPosition2)) {
@@ -147,7 +146,7 @@ public class Day3 {
                 }
             }
         }
-        return sumOfDimensions.stream().mapToInt(v -> v).min().getAsInt();
+         return sumOfDimensions.stream().mapToInt(v -> v).min().getAsInt();
     }
 
     private boolean isPositionCross(Position positionOfWire, List<Position> listOfIntersectionPosition) {

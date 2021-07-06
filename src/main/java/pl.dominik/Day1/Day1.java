@@ -10,8 +10,8 @@ import java.util.List;
 
 public class Day1 {
 
-    private static final List<Integer> massOfModules = new ArrayList<>();
-    private static final List<Integer> neededFuels = new ArrayList<>();
+    private final List<Integer> massOfModules = new ArrayList<>();
+    private final List<Integer> neededFuels = new ArrayList<>();
 
     public void execute() throws IOException {
         loadData();
@@ -20,7 +20,7 @@ public class Day1 {
         System.out.println("Part Two result: " + calculateFuel2(massOfModules));
     }
 
-    private static void loadData() throws IOException {
+    private void loadData() throws IOException {
         Path path = Paths.get("src/main/resources/Day1/data.txt");
         BufferedReader reader = Files.newBufferedReader(path);
         String line;

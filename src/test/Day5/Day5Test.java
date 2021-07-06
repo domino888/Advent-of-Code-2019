@@ -28,6 +28,12 @@ public class Day5Test {
         System.setOut(new PrintStream(testOut));
     }
 
+    @AfterEach
+    public void restoreSystemInputOutput() {
+        System.setIn(systemIn);
+        System.setOut(systemOut);
+    }
+
     private void provideInput(String data) {
         testIn = new ByteArrayInputStream(data.getBytes());
         System.setIn(testIn);
@@ -35,12 +41,6 @@ public class Day5Test {
 
     private String getOutput() {
         return testOut.toString();
-    }
-
-    @AfterEach
-    public void restoreSystemInputOutput() {
-        System.setIn(systemIn);
-        System.setOut(systemOut);
     }
 
     @Test

@@ -271,7 +271,7 @@ public class Day5 {
         }
     }
 
-    public int[] returnInstructionArray(int instruction) {
+    private int[] returnInstructionArray(int instruction) {
         int[] parameterModeArray = new int[5];
         int[] instructionArray = new int[4];
         StringBuilder stringBuilder = new StringBuilder();

@@ -16,8 +16,8 @@ public class Day4 {
     }
 
     public int calculateNumberOfDifferentPasswordsWithFirstCriteria(Integer[] criteriaNumbers) {
-        boolean isDouble = false;        // isDouble=true;    to meet the conditions
-        int compareNumber = 0;           // compareNumber=5   to meet the conditions
+        boolean isDouble = false;                  // isDouble=true;    to meet the conditions
+        int compareNumber = 0;                     // compareNumber=5   to meet the conditions
         int howManyPasswords = 0;
 
         for (int i = criteriaNumbers[0]; i <= criteriaNumbers[1]; i++) {
@@ -41,9 +41,9 @@ public class Day4 {
     }
 
     public int calculateNumberOfDifferentPasswordsWithSecondCriteria(Integer[] criteriaNumbers) {
-        boolean isDouble = false;                    // isDouble=true;                      to meet the conditions
-        boolean hasPasswordDoubledDigits = false;    // hasPasswordDoubledDigits = true;    to meet the conditions
-        int compareNumber = 0;                       // compareNumber=5;                    to meet the conditions
+        boolean isDouble = false;                   // isDouble=true;                      to meet the conditions
+        boolean hasPasswordDoubledDigits;           // hasPasswordDoubledDigits = true;    to meet the conditions
+        int compareNumber = 0;                      // compareNumber=5;                    to meet the conditions
         int howManyPasswords = 0;
 
         for (int i = criteriaNumbers[0]; i <= criteriaNumbers[1]; i++) {
@@ -67,7 +67,7 @@ public class Day4 {
         return howManyPasswords;
     }
 
-    static boolean hasPasswordDoubledDigits(String password) {
+    private boolean hasPasswordDoubledDigits(String password) {
         char[] ch = new char[password.length()];
         int[] count = new int[100];
         boolean check = false;

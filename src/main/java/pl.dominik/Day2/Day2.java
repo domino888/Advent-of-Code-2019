@@ -56,7 +56,7 @@ public class Day2 {
         return foundedInstructionsParameters;
     }
 
-    public Integer[] returnClearIntegerArray(int noun, int verb) throws IOException {
+    private Integer[] returnClearIntegerArray(int noun, int verb) throws IOException {
         Integer[] integerArray = readNumberFromFile();
         integerArray[1] = noun;
         integerArray[2] = verb;
@@ -81,7 +81,7 @@ public class Day2 {
         return integerArray[0];
     }
 
-    public Integer[] readNumberFromFile() throws IOException {
+    private Integer[] readNumberFromFile() throws IOException {
         Path path = Paths.get("src/main/resources/Day2/data.txt");
         BufferedReader reader = Files.newBufferedReader(path);
         String line = reader.readLine();
