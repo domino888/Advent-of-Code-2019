@@ -112,3 +112,8 @@ out/production/Advent of Code/Day6/data.txt
 out/production/Advent of Code/main/java/pl/dominik/Day6/Day6.class
 out/production/Advent of Code/main/java/pl/dominik/Day6/Planet.class
 out/production/Advent of Code/main/resources/Day6/data.txt
+out/production/Advent of Code/Day7/data.txt
+out/production/Advent of Code/main/java/pl/dominik/Day7/Day7.class
+out/production/Advent of Code/main/java/pl/dominik/Day7/IntcodeComputer.class
+out/production/Advent of Code/main/resources/Day7/data.txt
+out/test/Advent of Code/Day7/Day7Test.class
