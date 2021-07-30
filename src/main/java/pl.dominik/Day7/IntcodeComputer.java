@@ -1,41 +1,31 @@
 package main.java.pl.dominik.Day7;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class IntcodeComputer {
 
     Integer[] integerArray;
-    int inputPhaseSetting;
-    int inputSignal;
-    int output;
-    int pointer;
+    Queue<Integer> inputQueue = new LinkedList<>();
+    Queue<Integer> outputQueue = new LinkedList<>();;
 
-    public IntcodeComputer(int inputPhaseSetting, int inputSignal, Integer[] integerArray) throws IOException {
-        this.inputPhaseSetting = inputPhaseSetting;
-        this.inputSignal = inputSignal;
-        if(integerArray != null){
-            this.integerArray = Arrays.copyOf(integerArray, integerArray.length);
-        } else{
-            this.integerArray = readNumberFromFile();
-        }
+    public IntcodeComputer(Integer[] integerArray) {
+        this.integerArray = Arrays.copyOf(integerArray, integerArray.length);
+    }
+
+    public void setInput(int input) {
+        inputQueue.add(input);
     }
 
     public int getOutput() {
-        return output;
+        if (outputQueue.peek() != null) {
+            return outputQueue.poll();
+        } else return Integer.MIN_VALUE;
     }
 
-    public void setOutput(int output) {
-        this.output = output;
-    }
-
-    public void runIntCodeComputer() throws IOException {
-        pointer = 0;
-        boolean flag = true;
+    public void runIntCodeComputer() {
+        int pointer = 0;
         loop:
         for (int i = 0; i < integerArray.length; i += pointer) {
             int[] instructionArray = returnInstructionArray(integerArray[i]);
@@ -79,20 +69,15 @@ public class IntcodeComputer {
                 }
                 case 3: {
                     pointer = 2;
-                    if (flag) {
-                        integerArray[integerArray[i + 1]] = inputPhaseSetting;
-                        flag = false;
-                    } else {
-                        integerArray[integerArray[i + 1]] = inputSignal;
-                    }
+                    integerArray[integerArray[i + 1]] = inputQueue.poll();
                     break;
                 }
                 case 4: {
                     pointer = 2;
                     if (parameterMode1 == 0) {
-                        setOutput(integerArray[integerArray[i + 1]]);
+                        outputQueue.add(integerArray[integerArray[i + 1]]);
                     } else {
-                        setOutput(integerArray[i + 1]);
+                        outputQueue.add(integerArray[i + 1]);
                     }
                     break;
                 }
@@ -235,21 +220,7 @@ public class IntcodeComputer {
             parameterModeArray[4 - i] = Character.getNumericValue(integerArrayString.charAt(i));
         }
         System.arraycopy(parameterModeArray, 0, instructionArray, 0, 3);
-        instructionArray[3] = Integer.parseInt(String.valueOf(parameterModeArray[3]) + String.valueOf(parameterModeArray[4]));
+        instructionArray[3] = Integer.parseInt(String.valueOf(parameterModeArray[3]) + parameterModeArray[4]);
         return instructionArray;
-    }
-
-    public Integer[] readNumberFromFile() throws IOException {
-        Path path = Paths.get("src/main/resources/Day7/data.txt");
-        BufferedReader reader = Files.newBufferedReader(path);
-        String line = reader.readLine();
-
-        String[] lineWithoutCommas = line.trim().split(",");
-        Integer[] integerArray = new Integer[lineWithoutCommas.length];
-
-        for (int i = 0; i < lineWithoutCommas.length; i++) {
-            integerArray[i] = Integer.parseInt(lineWithoutCommas[i]);
-        }
-        return integerArray;
     }
 }
