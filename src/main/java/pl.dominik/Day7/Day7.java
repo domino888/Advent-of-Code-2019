@@ -24,38 +24,28 @@ public class Day7 {
         int maxThrusterSignal = 0;
 
         for (Integer[] phaseSetting : phaseSettingPermutation) {
-            IntcodeComputer AmpA = new IntcodeComputer(integerArray);
-            AmpA.setInput(phaseSetting[0]);
-            AmpA.setInput(0);
-            AmpA.runIntCodeComputer();
-
-            IntcodeComputer AmpB = new IntcodeComputer(integerArray);
-            AmpB.setInput(phaseSetting[1]);
-            AmpB.setInput(AmpA.getOutput());
-            AmpB.runIntCodeComputer();
-
-            IntcodeComputer AmpC = new IntcodeComputer(integerArray);
-            AmpC.setInput(phaseSetting[2]);
-            AmpC.setInput(AmpB.getOutput());
-            AmpC.runIntCodeComputer();
-
-            IntcodeComputer AmpD = new IntcodeComputer(integerArray);
-            AmpD.setInput(phaseSetting[3]);
-            AmpD.setInput(AmpC.getOutput());
-            AmpD.runIntCodeComputer();
-
-            IntcodeComputer AmpE = new IntcodeComputer(integerArray);
-            AmpE.setInput(phaseSetting[4]);
-            AmpE.setInput(AmpD.getOutput());
-            AmpE.runIntCodeComputer();
-
-            int actualThrusterSignal = AmpE.getOutput();
-            if (actualThrusterSignal > maxThrusterSignal) {
-                maxThrusterSignal = actualThrusterSignal;
+            IntcodeComputer[] Amps = new IntcodeComputer[5];
+            for (int i = 0; i < 5; i++) {
+                Amps[i] = new IntcodeComputer(integerArray);
+                Amps[i].setInput(phaseSetting[i]);
             }
+
+            Amps[0].setInput(0);
+
+            for (int i = 0; i < 5; i++) {
+                Amps[i].runIntCodeComputer();
+                if (i != 4) {
+                    Amps[i + 1].setInput(Amps[i].getOutput());
+                }
         }
-        return maxThrusterSignal;
+
+        int actualThrusterSignal = Amps[4].getOutput();
+        if (actualThrusterSignal > maxThrusterSignal) {
+            maxThrusterSignal = actualThrusterSignal;
+        }
     }
+        return maxThrusterSignal;
+}
 
     private void calculatePhaseSettingPermutation(int length, Integer[] elements) {
         if (length == 1) {
