@@ -6,9 +6,11 @@ import java.util.Queue;
 
 public class IntcodeComputer {
 
+    int pointer = 0;
+    boolean isRunning = true;
     Integer[] integerArray;
     Queue<Integer> inputQueue = new LinkedList<>();
-    Queue<Integer> outputQueue = new LinkedList<>();;
+    Queue<Integer> outputQueue = new LinkedList<>();
 
     public IntcodeComputer(Integer[] integerArray) {
         this.integerArray = Arrays.copyOf(integerArray, integerArray.length);
@@ -25,197 +27,82 @@ public class IntcodeComputer {
     }
 
     public void runIntCodeComputer() {
-        int pointer = 0;
-        loop:
-        for (int i = 0; i < integerArray.length; i += pointer) {
-            int[] instructionArray = returnInstructionArray(integerArray[i]);
-            int parameterMode1 = instructionArray[2];
-            int parameterMode2 = instructionArray[1];
-            int parameterMode3 = instructionArray[0];
-            switch (instructionArray[3]) {
+        int[] instruction;
+        while (isRunning) {
+            instruction = returnInstruction(integerArray[pointer]);
+            switch (instruction[3]) {
                 case 1: {
-                    pointer = 4;
-                    if (parameterMode1 == 0) {
-                        if (parameterMode2 == 0) {
-                            integerArray[integerArray[i + 3]] = integerArray[integerArray[i + 1]] + integerArray[integerArray[i + 2]];
-                        } else {
-                            integerArray[integerArray[i + 3]] = integerArray[integerArray[i + 1]] + integerArray[i + 2];
-                        }
-                    } else {
-                        if (parameterMode2 == 0) {
-                            integerArray[integerArray[i + 3]] = integerArray[i + 1] + integerArray[integerArray[i + 2]];
-                        } else {
-                            integerArray[integerArray[i + 3]] = integerArray[i + 1] + integerArray[i + 2];
-                        }
-                    }
+                    integerArray[integerArray[pointer + 3]] = getValueByParameter(instruction[2], pointer + 1)
+                            + getValueByParameter(instruction[1], pointer + 2);
+                    pointer += 4;
                     break;
                 }
                 case 2: {
-                    pointer = 4;
-                    if (parameterMode1 == 0) {
-                        if (parameterMode2 == 0) {
-                            integerArray[integerArray[i + 3]] = integerArray[integerArray[i + 1]] * integerArray[integerArray[i + 2]];
-                        } else {
-                            integerArray[integerArray[i + 3]] = integerArray[integerArray[i + 1]] * integerArray[i + 2];
-                        }
-                    } else {
-                        if (parameterMode2 == 0) {
-                            integerArray[integerArray[i + 3]] = integerArray[i + 1] * integerArray[integerArray[i + 2]];
-                        } else {
-                            integerArray[integerArray[i + 3]] = integerArray[i + 1] * integerArray[i + 2];
-                        }
-                    }
+                    integerArray[integerArray[pointer + 3]] = getValueByParameter(instruction[2], pointer + 1)
+                            * getValueByParameter(instruction[1], pointer + 2);
+                    pointer += 4;
                     break;
                 }
                 case 3: {
-                    pointer = 2;
-                    integerArray[integerArray[i + 1]] = inputQueue.poll();
+                    integerArray[integerArray[pointer + 1]] = inputQueue.poll();
+                    pointer += 2;
                     break;
                 }
                 case 4: {
-                    pointer = 2;
-                    if (parameterMode1 == 0) {
-                        outputQueue.add(integerArray[integerArray[i + 1]]);
-                    } else {
-                        outputQueue.add(integerArray[i + 1]);
-                    }
+                    outputQueue.add(getValueByParameter(instruction[2], pointer + 1));
+                    pointer += 2;
                     break;
                 }
                 case 5: {
-                    pointer = 3;
-                    if (parameterMode1 == 0) {
-                        if (parameterMode2 == 0) {
-                            if (integerArray[integerArray[i + 1]] != 0) {
-                                i = integerArray[integerArray[i + 2]];
-                                pointer = 0;
-                            }
-                        } else {
-                            if (integerArray[integerArray[i + 1]] != 0) {
-                                i = integerArray[i + 2];
-                                pointer = 0;
-                            }
-                        }
-                    } else {
-                        if (parameterMode2 == 0) {
-                            if (integerArray[i + 1] != 0) {
-                                i = integerArray[integerArray[i + 2]];
-                                pointer = 0;
-                            }
-                        } else {
-                            if (integerArray[i + 1] != 0) {
-                                i = integerArray[i + 2];
-                                pointer = 0;
-                            }
-                        }
+                    int counter = 3;
+                    if (getValueByParameter(instruction[2], pointer + 1) != 0) {
+                        pointer = getValueByParameter(instruction[1], pointer + 2);
+                        counter = 0;
                     }
+                    pointer += counter;
                     break;
                 }
                 case 6: {
-                    pointer = 3;
-                    if (parameterMode1 == 0) {
-                        if (parameterMode2 == 0) {
-                            if (integerArray[integerArray[i + 1]] == 0) {
-                                i = integerArray[integerArray[i + 2]];
-                                pointer = 0;
-                            }
-                        } else {
-                            if (integerArray[integerArray[i + 1]] == 0) {
-                                i = integerArray[i + 2];
-                                pointer = 0;
-                            }
-                        }
-                    } else {
-                        if (parameterMode2 == 0) {
-                            if (integerArray[i + 1] == 0) {
-                                i = integerArray[integerArray[i + 2]];
-                                pointer = 0;
-                            }
-                        } else {
-                            if (integerArray[i + 1] == 0) {
-                                i = integerArray[i + 2];
-                                pointer = 0;
-                            }
-                        }
+                    int counter = 3;
+                    if (getValueByParameter(instruction[2], pointer + 1) == 0) {
+                        pointer = getValueByParameter(instruction[1], pointer + 2);
+                        counter = 0;
                     }
+                    pointer += counter;
                     break;
                 }
                 case 7: {
-                    pointer = 4;
-                    if (parameterMode1 == 0) {
-                        if (parameterMode2 == 0) {
-                            if (integerArray[integerArray[i + 1]] < integerArray[integerArray[i + 2]]) {
-                                integerArray[integerArray[i + 3]] = 1;
-                            } else {
-                                integerArray[integerArray[i + 3]] = 0;
-                            }
-                        } else {
-                            if (integerArray[integerArray[i + 1]] < integerArray[i + 2]) {
-                                integerArray[integerArray[i + 3]] = 1;
-                            } else {
-                                integerArray[integerArray[i + 3]] = 0;
-                            }
-                        }
-                    } else {
-                        if (parameterMode2 == 0) {
-                            if (integerArray[i + 1] < integerArray[integerArray[i + 2]]) {
-                                integerArray[integerArray[i + 3]] = 1;
-                            } else {
-                                integerArray[integerArray[i + 3]] = 0;
-                            }
-                        } else {
-                            if (integerArray[i + 1] < integerArray[i + 2]) {
-                                integerArray[integerArray[i + 3]] = 1;
-                            } else {
-                                integerArray[integerArray[i + 3]] = 0;
-                            }
-                        }
-                    }
+                    integerArray[integerArray[pointer + 3]] = (getValueByParameter(instruction[2], pointer + 1) < getValueByParameter(instruction[1], pointer + 2)) ? 1 : 0;
+                    pointer += 4;
                     break;
                 }
                 case 8: {
-                    pointer = 4;
-                    if (parameterMode1 == 0) {
-                        if (parameterMode2 == 0) {
-                            if (integerArray[integerArray[i + 1]] == integerArray[integerArray[i + 2]]) {
-                                integerArray[integerArray[i + 3]] = 1;
-                            } else {
-                                integerArray[integerArray[i + 3]] = 0;
-                            }
-                        } else {
-                            if (integerArray[integerArray[i + 1]] == integerArray[i + 2]) {
-                                integerArray[integerArray[i + 3]] = 1;
-                            } else {
-                                integerArray[integerArray[i + 3]] = 0;
-                            }
-                        }
-                    } else {
-                        if (parameterMode2 == 0) {
-                            if (integerArray[i + 1] == integerArray[integerArray[i + 2]]) {
-                                integerArray[integerArray[i + 3]] = 1;
-                            } else {
-                                integerArray[integerArray[i + 3]] = 0;
-                            }
-                        } else {
-                            if (integerArray[i + 1] == integerArray[i + 2]) {
-                                integerArray[integerArray[i + 3]] = 1;
-                            } else {
-                                integerArray[integerArray[i + 3]] = 0;
-                            }
-                        }
-                    }
+                    integerArray[integerArray[pointer + 3]] = (getValueByParameter(instruction[2], pointer + 1) == getValueByParameter(instruction[1], pointer + 2)) ? 1 : 0;
+                    pointer += 4;
                     break;
                 }
-                case 99:
-                    break loop;
+                case 99: {
+                    isRunning = false;
+                    break;
+                }
+                default:
+                    break;
             }
         }
     }
 
-    private int[] returnInstructionArray(int instruction) {
+    int getValueByParameter(int parameter, int pointer) {
+        if (parameter == 0) {
+            return integerArray[integerArray[pointer]];
+        }
+        return integerArray[pointer];
+    }
+
+    private int[] returnInstruction(int number) {
         int[] parameterModeArray = new int[5];
         int[] instructionArray = new int[4];
         StringBuilder stringBuilder = new StringBuilder();
-        String integerArrayString = stringBuilder.append(instruction).reverse().toString();
+        String integerArrayString = stringBuilder.append(number).reverse().toString();
         for (int i = 0; i < integerArrayString.length(); i++) {
             parameterModeArray[4 - i] = Character.getNumericValue(integerArrayString.charAt(i));
         }
