@@ -13,12 +13,12 @@ public class Day7 {
 
     List<Integer[]> phaseSettingPermutation = new ArrayList<>();
 
-    public void execute() throws IOException {
+    public void execute() throws Exception {
         System.out.println("Day 7: ");
         System.out.println("Part One result: " + calculateMaxThrusterSignal(readNumberFromFile()));
     }
 
-    public int calculateMaxThrusterSignal(Integer[] integerArray) {
+    public int calculateMaxThrusterSignal(Integer[] integerArray) throws Exception {
         Integer[] phaseSettingArray = new Integer[]{0, 1, 2, 3, 4};
         calculatePhaseSettingPermutation(phaseSettingArray.length, phaseSettingArray);
         int maxThrusterSignal = 0;

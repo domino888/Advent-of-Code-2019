@@ -20,10 +20,12 @@ public class IntcodeComputer {
         inputQueue.add(input);
     }
 
-    public int getOutput() {
+    public int getOutput() throws Exception {
         if (outputQueue.peek() != null) {
             return outputQueue.poll();
-        } else return Integer.MIN_VALUE;
+        } else {
+            throw new Exception("Output queue is empty");
+        }
     }
 
     public void runIntCodeComputer() {
@@ -91,7 +93,7 @@ public class IntcodeComputer {
         }
     }
 
-    int getValueByParameter(int parameter, int pointer) {
+    private int getValueByParameter(int parameter, int pointer) {
         if (parameter == 0) {
             return integerArray[integerArray[pointer]];
         }

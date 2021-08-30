@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         Scanner in = new Scanner(System.in);
         while (true) {
             System.out.println("\nType day: (1-24)");
@@ -89,7 +89,7 @@ public class Main {
         day6.execute();
     }
 
-    private static void executeDay7() throws IOException {
+    private static void executeDay7() throws Exception {
         Day7 day7 = new Day7();
         day7.execute();
     }
