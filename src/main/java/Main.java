@@ -7,6 +7,7 @@ import main.java.pl.dominik.Day4.Day4;
 import main.java.pl.dominik.Day5.Day5;
 import main.java.pl.dominik.Day6.Day6;
 import main.java.pl.dominik.Day7.Day7;
+import main.java.pl.dominik.Day8.Day8;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -18,27 +19,38 @@ public class Main {
         while (true) {
             System.out.println("\nType day: (1-24)");
             switch (in.next()) {
-                case "1":
+                case "1": {
                     executeDay1();
                     break;
-                case "2":
+                }
+                case "2": {
                     executeDay2();
                     break;
-                case "3":
+                }
+                case "3": {
                     executeDay3();
                     break;
-                case "4":
+                }
+                case "4": {
                     executeDay4();
                     break;
-                case "5":
+                }
+                case "5": {
                     executeDay5();
                     break;
-                case "6":
+                }
+                case "6": {
                     executeDay6();
                     break;
-                case "7":
+                }
+                case "7": {
                     executeDay7();
                     break;
+                }
+                case "8": {
+                    executeDay8();
+                    break;
+                }
                 case "q":
                     return;
                 default:
@@ -61,20 +73,29 @@ public class Main {
         Day3 day3 = new Day3();
         day3.execute();
     }
+
     private static void executeDay4() throws IOException {
         Day4 day4 = new Day4();
         day4.execute();
     }
+
     private static void executeDay5() throws IOException {
         Day5 day5 = new Day5();
         day5.execute();
     }
+
     private static void executeDay6() throws IOException {
         Day6 day6 = new Day6();
         day6.execute();
     }
+
     private static void executeDay7() throws IOException {
         Day7 day7 = new Day7();
         day7.execute();
+    }
+
+    private static void executeDay8() throws IOException {
+        Day8 day8 = new Day8();
+        day8.execute();
     }
 }

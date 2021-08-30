@@ -117,3 +117,7 @@ out/production/Advent of Code/main/java/pl/dominik/Day7/Day7.class
 out/production/Advent of Code/main/java/pl/dominik/Day7/IntcodeComputer.class
 out/production/Advent of Code/main/resources/Day7/data.txt
 out/test/Advent of Code/Day7/Day7Test.class
+out/test/Advent of Code/Day8/Day8Test.class
+out/production/Advent of Code/Day8/data.txt
+out/production/Advent of Code/main/resources/Day8/data.txt
+out/production/Advent of Code/main/java/pl/dominik/Day8/Day8.class
