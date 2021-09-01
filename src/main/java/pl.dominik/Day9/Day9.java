@@ -17,30 +17,29 @@ public class Day9 {
     }
 
 
-    public List<Integer> produceBoostKeycode(Integer[] integerArray) throws Exception {
-        IntcodeComputer intcodeComputer = new IntcodeComputer(integerArray);
+    public List<Long> produceBoostKeycode(Long[] program) throws Exception {
+        List<Long> outputValues = new ArrayList<>();
+        IntcodeComputer intcodeComputer = new IntcodeComputer(program);
+        intcodeComputer.setInput(1L);
         intcodeComputer.runIntCodeComputer();
-
-        List<Integer> outputValues = new ArrayList<>();
 
         while (intcodeComputer.hasOutput()) {
             outputValues.add(intcodeComputer.getOutput());
         }
-
         return outputValues;
     }
 
-    private Integer[] readNumberFromFile() throws IOException {
+    private Long[] readNumberFromFile() throws IOException {
         Path path = Paths.get("src/main/resources/Day9/data.txt");
         BufferedReader reader = Files.newBufferedReader(path);
         String line = reader.readLine();
 
         String[] lineWithoutCommas = line.trim().split(",");
-        Integer[] integerArray = new Integer[lineWithoutCommas.length];
+        Long[] program = new Long[lineWithoutCommas.length];
 
         for (int i = 0; i < lineWithoutCommas.length; i++) {
-            integerArray[i] = Integer.parseInt(lineWithoutCommas[i]);
+            program[i] = Long.parseLong(lineWithoutCommas[i]);
         }
-        return integerArray;
+        return program;
     }
 }
