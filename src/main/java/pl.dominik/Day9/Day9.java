@@ -16,7 +16,6 @@ public class Day9 {
         produceBoostKeycode(readNumberFromFile()).forEach(System.out::println);
     }
 
-
     public List<Long> produceBoostKeycode(Long[] program) throws Exception {
         List<Long> outputValues = new ArrayList<>();
         IntcodeComputer intcodeComputer = new IntcodeComputer(program);

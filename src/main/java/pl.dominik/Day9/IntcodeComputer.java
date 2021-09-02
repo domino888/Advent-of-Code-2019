@@ -9,7 +9,7 @@ public class IntcodeComputer {
     private int pointer = 0;
     private int relativeBase = 0;
     private boolean isRunning = true;
-    private final Long[] program = new Long[1000000];
+    private final Long[] program = new Long[10000];
     private final Queue<Long> inputQueue = new LinkedList<>();
     private final Queue<Long> outputQueue = new LinkedList<>();
 
@@ -45,28 +45,19 @@ public class IntcodeComputer {
             instruction = returnInstruction(program[pointer].intValue());
             switch (instruction[3]) {
                 case 1: {
-                    program[program[pointer + 3].intValue()] = getValueByParameter(instruction[2], pointer + 1)
-                            + getValueByParameter(instruction[1], pointer + 2);
+                    setProgramByParameter(instruction[0], pointer + 3, getValueByParameter(instruction[2], pointer + 1) + getValueByParameter(instruction[1], pointer + 2));
+
                     pointer += 4;
                     break;
                 }
                 case 2: {
-                    program[program[pointer + 3].intValue()] = getValueByParameter(instruction[2], pointer + 1)
-                            * getValueByParameter(instruction[1], pointer + 2);
+                    setProgramByParameter(instruction[0], pointer + 3, getValueByParameter(instruction[2], pointer + 1) * getValueByParameter(instruction[1], pointer + 2));
                     pointer += 4;
                     break;
                 }
                 case 3: {
                     if (!inputQueue.isEmpty()) {
-                        //   setProgramByParameter(instruction[2], pointer, inputQueue.poll());
-                        if (instruction[2] == 0) {
-                            program[program[pointer + 1].intValue()] = inputQueue.poll();
-                        }
-                        if (instruction[2] == 2) {
-                            Long asdf = program[pointer + 1] + relativeBase;
-                            program[asdf.intValue()] = inputQueue.poll();
-
-                        }
+                        setProgramByParameter(instruction[2], pointer + 1, inputQueue.poll());
                         pointer += 2;
                     } else {
                         shouldPause = true;
@@ -97,22 +88,14 @@ public class IntcodeComputer {
                     break;
                 }
                 case 7: {
-                    if (instruction[0] == 0) {
-                        program[program[pointer + 3].intValue()] = (long) ((getValueByParameter(instruction[2], pointer + 1) < getValueByParameter(instruction[1], pointer + 2)) ? 1 : 0);
-                    }
-                    if (instruction[0] == 2) {
-                        program[relativeBase + program[pointer].intValue()] = (long) ((getValueByParameter(instruction[2], pointer + 1) < getValueByParameter(instruction[1], pointer + 2)) ? 1 : 0);
-                    }
+                    long valueToSet = (getValueByParameter(instruction[2], pointer + 1) < getValueByParameter(instruction[1], pointer + 2)) ? 1L : 0L;
+                    setProgramByParameter(instruction[0], pointer + 3, valueToSet);
                     pointer += 4;
                     break;
                 }
                 case 8: {
-                    if (instruction[0] == 0) {
-                        program[program[pointer + 3].intValue()] = (long) ((getValueByParameter(instruction[2], pointer + 1) == getValueByParameter(instruction[1], pointer + 2)) ? 1 : 0);
-                    }
-                    if (instruction[0] == 2) {
-                        program[relativeBase + program[pointer].intValue()] = (long) ((getValueByParameter(instruction[2], pointer + 1) == getValueByParameter(instruction[1], pointer + 2)) ? 1 : 0);
-                    }
+                    long valueToSet = (getValueByParameter(instruction[2], pointer + 1) == getValueByParameter(instruction[1], pointer + 2)) ? 1L : 0L;
+                    setProgramByParameter(instruction[0], pointer + 3, valueToSet);
                     pointer += 4;
                     break;
                 }
@@ -133,7 +116,7 @@ public class IntcodeComputer {
 
     void setProgramByParameter(int parameter, int pointer, long valueToSet) {
         if (parameter == 0) {                  // position mode
-            program[program[pointer + 1].intValue()] = valueToSet;
+            program[program[pointer].intValue()] = valueToSet;
         }
         if (parameter == 2) {                  // relative mode
             program[relativeBase + program[pointer].intValue()] = valueToSet;
