@@ -14,12 +14,25 @@ public class Day9 {
         System.out.println("Day 9: ");
         System.out.println("Part One result: ");
         produceBoostKeycode(readNumberFromFile()).forEach(System.out::println);
+        System.out.println("Part Two result: ");
+        getCoordinatesOfDistressSignal(readNumberFromFile()).forEach(System.out::println);
     }
 
     public List<Long> produceBoostKeycode(Long[] program) throws Exception {
         List<Long> outputValues = new ArrayList<>();
         IntcodeComputer intcodeComputer = new IntcodeComputer(program);
         intcodeComputer.setInput(1L);
+        intcodeComputer.runIntCodeComputer();
+
+        while (intcodeComputer.hasOutput()) {
+            outputValues.add(intcodeComputer.getOutput());
+        }
+        return outputValues;
+    }
+    public List<Long> getCoordinatesOfDistressSignal(Long[] program) throws Exception {
+        List<Long> outputValues = new ArrayList<>();
+        IntcodeComputer intcodeComputer = new IntcodeComputer(program);
+        intcodeComputer.setInput(2L);
         intcodeComputer.runIntCodeComputer();
 
         while (intcodeComputer.hasOutput()) {
