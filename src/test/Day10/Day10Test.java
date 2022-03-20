@@ -12,80 +12,80 @@ public class Day10Test {
     @Test
     void checkGettingNumberOfDetectedAsteroids() {
         assertEquals(8, day10.getNumberOfDetectedAsteroids(new char[][]{
-                ".#..#\n".toCharArray(),
-                ".....\n".toCharArray(),
-                "#####\n".toCharArray(),
-                "....#\n".toCharArray(),
+                ".#..#".toCharArray(),
+                ".....".toCharArray(),
+                "#####".toCharArray(),
+                "....#".toCharArray(),
                 "...##".toCharArray()}));
     }
 
     @Test
     void checkGettingNumberOfDetectedAsteroids2() {
         assertEquals(33, day10.getNumberOfDetectedAsteroids(new char[][]{
-                "......#.#.\n".toCharArray(),
-                "#..#.#....\n".toCharArray(),
-                "..#######.\n".toCharArray(),
-                ".#.#.###..\n".toCharArray(),
-                ".#..#.....\n".toCharArray(),
-                "..#....#.#\n".toCharArray(),
-                "#..#....#.\n".toCharArray(),
-                ".##.#..###\n".toCharArray(),
-                "##...#..#.\n".toCharArray(),
+                "......#.#.".toCharArray(),
+                "#..#.#....".toCharArray(),
+                "..#######.".toCharArray(),
+                ".#.#.###..".toCharArray(),
+                ".#..#.....".toCharArray(),
+                "..#....#.#".toCharArray(),
+                "#..#....#.".toCharArray(),
+                ".##.#..###".toCharArray(),
+                "##...#..#.".toCharArray(),
                 ".#....####".toCharArray()}));
     }
 
     @Test
     void checkGettingNumberOfDetectedAsteroids3() {
         assertEquals(35, day10.getNumberOfDetectedAsteroids(new char[][]{
-                "#.#...#.#.\n".toCharArray(),
-                ".###....#.\n".toCharArray(),
-                ".#....#...\n".toCharArray(),
-                "##.#.#.#.#\n".toCharArray(),
-                "....#.#.#.\n".toCharArray(),
-                ".##..###.#\n".toCharArray(),
-                "..#...##..\n".toCharArray(),
-                "..##....##\n".toCharArray(),
-                "......#...\n".toCharArray(),
+                "#.#...#.#.".toCharArray(),
+                ".###....#.".toCharArray(),
+                ".#....#...".toCharArray(),
+                "##.#.#.#.#".toCharArray(),
+                "....#.#.#.".toCharArray(),
+                ".##..###.#".toCharArray(),
+                "..#...##..".toCharArray(),
+                "..##....##".toCharArray(),
+                "......#...".toCharArray(),
                 ".####.###.".toCharArray()}));
     }
 
     @Test
     void checkGettingNumberOfDetectedAsteroids4() {
         assertEquals(41, day10.getNumberOfDetectedAsteroids(new char[][]{
-                ".#..#..###\n".toCharArray(),
-                "####.###.#\n".toCharArray(),
-                "....###.#.\n".toCharArray(),
-                "..###.##.#\n".toCharArray(),
-                "##.##.#.#.\n".toCharArray(),
-                "....###..#\n".toCharArray(),
-                "..#.#..#.#\n".toCharArray(),
-                "#..#.#.###\n".toCharArray(),
-                ".##...##.#\n".toCharArray(),
+                ".#..#..###".toCharArray(),
+                "####.###.#".toCharArray(),
+                "....###.#.".toCharArray(),
+                "..###.##.#".toCharArray(),
+                "##.##.#.#.".toCharArray(),
+                "....###..#".toCharArray(),
+                "..#.#..#.#".toCharArray(),
+                "#..#.#.###".toCharArray(),
+                ".##...##.#".toCharArray(),
                 ".....#.#..".toCharArray()}));
     }
 
     @Test
     void checkGettingNumberOfDetectedAsteroids5() {
         assertEquals(210, day10.getNumberOfDetectedAsteroids(new char[][]{
-                ".#..##.###...#######\n".toCharArray(),
-                "##.############..##.\n".toCharArray(),
-                ".#.######.########.#\n".toCharArray(),
-                ".###.#######.####.#.\n".toCharArray(),
-                "#####.##.#.##.###.##\n".toCharArray(),
-                "..#####..#.#########\n".toCharArray(),
-                "####################\n".toCharArray(),
-                "#.####....###.#.#.##\n".toCharArray(),
-                "##.#################\n".toCharArray(),
-                "#####.##.###..####..\n".toCharArray(),
-                "..######..##.#######\n".toCharArray(),
-                "####.##.####...##..#\n".toCharArray(),
-                ".#####..#.######.###\n".toCharArray(),
-                "##...#.##########...\n".toCharArray(),
-                "#.##########.#######\n".toCharArray(),
-                ".####.#.###.###.#.##\n".toCharArray(),
-                "....##.##.###..#####\n".toCharArray(),
-                ".#.#.###########.###\n".toCharArray(),
-                "#.#.#.#####.####.###\n".toCharArray(),
+                ".#..##.###...#######".toCharArray(),
+                "##.############..##.".toCharArray(),
+                ".#.######.########.#".toCharArray(),
+                ".###.#######.####.#.".toCharArray(),
+                "#####.##.#.##.###.##".toCharArray(),
+                "..#####..#.#########".toCharArray(),
+                "####################".toCharArray(),
+                "#.####....###.#.#.##".toCharArray(),
+                "##.#################".toCharArray(),
+                "#####.##.###..####..".toCharArray(),
+                "..######..##.#######".toCharArray(),
+                "####.##.####...##..#".toCharArray(),
+                ".#####..#.######.###".toCharArray(),
+                "##...#.##########...".toCharArray(),
+                "#.##########.#######".toCharArray(),
+                ".####.#.###.###.#.##".toCharArray(),
+                "....##.##.###..#####".toCharArray(),
+                ".#.#.###########.###".toCharArray(),
+                "#.#.#.#####.####.###".toCharArray(),
                 "###.##.####.##.#..##".toCharArray()}));
     }
 }

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Day10 {
-    private int sizeOfMap;
 
     public void execute() throws IOException {
         System.out.println("Day 10: ");
@@ -18,34 +17,46 @@ public class Day10 {
 
     public int getNumberOfDetectedAsteroids(char[][] map) {
         List<Asteroid> asteroids = loadAsteroids(map);
-        setNeighboringAsteroids(asteroids);
-        computeVectors(asteroids);
-        computeVisibleAsteroids(asteroids);
 
-        return 0;
+        setNeighborAsteroidPositions(asteroids);
+        computeVectors(asteroids);
+        computeVisibleAsteroids(asteroids, map.length);
+        return calculateNumberOfDetectedAsteroids(asteroids);
     }
 
-    public void computeVisibleAsteroids(List<Asteroid> asteroids){
-        for(Asteroid asteroid :asteroids){
+    public int calculateNumberOfDetectedAsteroids(List<Asteroid> asteroids) {
+        int maxNumberOfDetectedAsteroids = 0;
+
+        for (Asteroid asteroid : asteroids) {
+            int numberOfDetectedAsteroids = asteroid.getNumberOfVisibleNeighbors();
+            if (numberOfDetectedAsteroids > maxNumberOfDetectedAsteroids) {
+                maxNumberOfDetectedAsteroids = numberOfDetectedAsteroids;
+            }
+        }
+        return maxNumberOfDetectedAsteroids;
+    }
+
+    public void computeVisibleAsteroids(List<Asteroid> asteroids, int sizeOfMap) {
+        for (Asteroid asteroid : asteroids) {
             asteroid.computeVisibleNeighbors(sizeOfMap);
         }
     }
 
-    public void computeVectors(List<Asteroid> asteroids){
-        for(Asteroid asteroid :asteroids){
+    public void computeVectors(List<Asteroid> asteroids) {
+        for (Asteroid asteroid : asteroids) {
             asteroid.computeVectors();
         }
     }
 
-    public void setNeighboringAsteroids(List<Asteroid> asteroids) {
+    public void setNeighborAsteroidPositions(List<Asteroid> asteroids) {
         for (Asteroid asteroid : asteroids) {
-            List<Asteroid> neighbors = new ArrayList<>();
+            List<Position> neighborsPositions = new ArrayList<>();
             for (Asteroid a : asteroids) {
                 if (!asteroid.getPosition().equals(a.getPosition())) {
-                    neighbors.add(new Asteroid(a.getPosition()));
+                    neighborsPositions.add(new Position(a.getPosition()));
                 }
             }
-            asteroid.setNeighbors(neighbors);
+            asteroid.setNeighborsPositions(neighborsPositions);
         }
     }
 
@@ -69,13 +80,12 @@ public class Day10 {
         while ((line = reader.readLine()) != null) {
             listOfLines.add(line);
         }
-        sizeOfMap = listOfLines.size();
-        char[][] map = new char[sizeOfMap][sizeOfMap];
+        char[][] map = new char[listOfLines.size()][listOfLines.size()];
 
         for (int i = 0; i < listOfLines.size(); i++) {
             for (int j = 0; j < listOfLines.get(i).length(); j++) {
                 char ch = listOfLines.get(i).charAt(j);
-                map[j][i] = ch;
+                map[i][j] = ch;
             }
         }
         return map;

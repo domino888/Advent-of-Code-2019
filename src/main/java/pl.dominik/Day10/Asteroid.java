@@ -1,41 +1,43 @@
 package main.java.pl.dominik.Day10;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Asteroid {
 
     private final Position position;
-    private List<Asteroid> neighborsAsteroids = new ArrayList<>();
-    private Map<Asteroid, Position> neighborsWithVectors = new HashMap<>();
+    private List<Position> neighborsPositions = new ArrayList<>();
+    private final Map<Position, Position> neighborsWithVectors = new HashMap<>();
 
     public Asteroid(Position position) {
         this.position = position;
     }
 
+    public int getNumberOfVisibleNeighbors() {
+        return neighborsPositions.size();
+    }
+
     public void computeVisibleNeighbors(int sizeOfMap) {
-        for (Map.Entry<Asteroid, Position> entry : neighborsWithVectors.entrySet()) {
-            Position asteroidPosition = entry.getKey().getPosition();
-            List<Asteroid> neighbors = entry.getKey().getNeighborsAsteroids();
+        for (Map.Entry<Position, Position> entry : neighborsWithVectors.entrySet()) {
+            Position neighbor = entry.getKey();
             Position vector = entry.getValue();
-            Asteroid asteroid = entry.getKey();
 
-            for (Asteroid neighbor : neighbors) {
-                Position movedPosition = new Position(neighbor.getPosition().getX() + vector.getX(), neighbor.getPosition().getY() + vector.getY());
+            int movedX = neighbor.getX() + vector.getX();
+            int movedY = neighbor.getY() + vector.getY();
 
-                asteroid.getNeighborsAsteroids()
+            while (movedX >= 0 && movedX < sizeOfMap && movedY >= 0 && movedY < sizeOfMap) {
+                Position movedPosition = new Position(movedX, movedY);
+                neighborsPositions.removeIf(key -> Objects.equals(key, movedPosition));
 
+                movedX = movedX + vector.getX();
+                movedY = movedY + vector.getY();
             }
-
         }
     }
 
     public void computeVectors() {
-        for (Asteroid neighbor : neighborsAsteroids) {
-            int vectorX = neighbor.position.getX() - position.getX();
-            int vectorY = neighbor.position.getY() - position.getY();
+        for (Position neighborPosition : neighborsPositions) {
+            int vectorX = neighborPosition.getX() - position.getX();
+            int vectorY = neighborPosition.getY() - position.getY();
 
             int greatestCommonDivisor = Math.abs(getGreatestCommonDivisor(vectorX, vectorY));
 
@@ -43,12 +45,8 @@ public class Asteroid {
             vectorY = vectorY / greatestCommonDivisor;
 
             Position vector = new Position(vectorX, vectorY);
-            neighborsWithVectors.put(neighbor, vector);
+            neighborsWithVectors.put(neighborPosition, vector);
         }
-    }
-
-    private void findPositionInNeighbors(Position position){
-        neighborsAsteroids.
     }
 
     private int getGreatestCommonDivisor(int a, int b) {
@@ -58,12 +56,8 @@ public class Asteroid {
         return getGreatestCommonDivisor(b, a % b);
     }
 
-    public void setNeighbors(List<Asteroid> neighborsAsteroids) {
-        this.neighborsAsteroids = neighborsAsteroids;
-    }
-
-    public List<Asteroid> getNeighborsAsteroids() {
-        return neighborsAsteroids;
+    public void setNeighborsPositions(List<Position> neighborsPositions) {
+        this.neighborsPositions = neighborsPositions;
     }
 
     public Position getPosition() {
