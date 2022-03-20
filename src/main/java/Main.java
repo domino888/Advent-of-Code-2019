@@ -9,6 +9,7 @@ import main.java.pl.dominik.Day6.Day6;
 import main.java.pl.dominik.Day7.Day7;
 import main.java.pl.dominik.Day8.Day8;
 import main.java.pl.dominik.Day9.Day9;
+import main.java.pl.dominik.Day10.Day10;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -54,6 +55,10 @@ public class Main {
                 }
                 case "9": {
                     executeDay9();
+                    break;
+                }
+                case "10": {
+                    executeDay10();
                     break;
                 }
                 case "q":
@@ -106,5 +111,9 @@ public class Main {
     private static void executeDay9() throws Exception {
         Day9 day9 = new Day9();
         day9.execute();
+    }
+    private static void executeDay10() throws IOException {
+        Day10 day10 = new Day10();
+        day10.execute();
     }
 }
