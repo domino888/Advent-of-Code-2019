@@ -10,14 +10,30 @@ import java.util.List;
 
 public class Day10 {
 
+    private Asteroid stationAsteroid;
+    int sizeOfMap;
+
     public void execute() throws IOException {
         System.out.println("Day 10: ");
         System.out.println("Part One result: " + getNumberOfDetectedAsteroids(readMapFromFile()));
+        System.out.println("Part Two result: " + getThe200thVaporizedAsteroid());
+    }
+
+    public int getThe200thVaporizedAsteroid() {
+        //tak mie moze byc bo odblokowywac trzeba dopiero jak usunie sie te blokujace asteoridy widok
+        //mozna wykorzystac wektory, w moemencie usuwania atseody, mozna isc wektorem i odblokowac kolejna za nia (jedna)
+        // czyli dodac do neighborposition ta asteroide
+       // stationAsteroid.resetNeighborsPositions();
+        stationAsteroid.move(sizeOfMap);
+
+//        List<Position> vaporisedasteroidspositions = func get
+//        Position the200thVaporisedAsteroidPosition =  vaporisedasteroidspositions. get(id == 200)
+        Position the200thVaporisedAsteroidPosition =  new Position(0,0);
+        return 100 * the200thVaporisedAsteroidPosition.getX() + the200thVaporisedAsteroidPosition.getY();
     }
 
     public int getNumberOfDetectedAsteroids(char[][] map) {
         List<Asteroid> asteroids = loadAsteroids(map);
-
         setNeighborAsteroidPositions(asteroids);
         computeVectors(asteroids);
         computeVisibleAsteroids(asteroids, map.length);
@@ -31,6 +47,7 @@ public class Day10 {
             int numberOfDetectedAsteroids = asteroid.getNumberOfVisibleNeighbors();
             if (numberOfDetectedAsteroids > maxNumberOfDetectedAsteroids) {
                 maxNumberOfDetectedAsteroids = numberOfDetectedAsteroids;
+                stationAsteroid = asteroid;
             }
         }
         return maxNumberOfDetectedAsteroids;
@@ -64,7 +81,7 @@ public class Day10 {
         List<Asteroid> asteroids = new ArrayList<>();
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
-                if (map[j][i] == '#') {
+                if (map[i][j] == '#') {
                     asteroids.add(new Asteroid(new Position(j, i)));
                 }
             }
@@ -81,6 +98,7 @@ public class Day10 {
             listOfLines.add(line);
         }
         char[][] map = new char[listOfLines.size()][listOfLines.size()];
+        sizeOfMap = listOfLines.size();
 
         for (int i = 0; i < listOfLines.size(); i++) {
             for (int j = 0; j < listOfLines.get(i).length(); j++) {

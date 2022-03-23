@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Position {
 
-    private final int x;
-    private final int y;
+    private int x;
+    private int y;
 
     public Position(int x, int y) {
         this.x = x;
@@ -13,6 +13,16 @@ public class Position {
     }
 
     public Position(Position position) {
+        x = position.getX();
+        y = position.getY();
+    }
+
+    public void setNewPosition(int newX, int newY) {
+        x = newX;
+        y = newY;
+    }
+
+    public void setNewPosition(Position position) {
         x = position.getX();
         y = position.getY();
     }
