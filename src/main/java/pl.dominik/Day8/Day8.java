@@ -56,8 +56,12 @@ public class Day8 {
             }
         }
         for (int i = 0; i < numberOfPixels; i += 25) {
-            message.add(imageList.subList(i, i + 25).toString().replaceAll("[\\[\\]]", "").replaceAll(",", " ").replaceAll("\\s+", "").replaceAll("0", " ").replaceAll("1", "\u2588"));
-
+            message.add(imageList.subList(i, i + 25).toString()
+                    .replaceAll("[\\[\\]]", "")
+                    .replaceAll(",", " ")
+                    .replaceAll("\\s+", "")
+                    .replaceAll("0", " ")
+                    .replaceAll("1", "\u2588"));
         }
         return message;
     }

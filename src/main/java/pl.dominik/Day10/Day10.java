@@ -16,31 +16,48 @@ public class Day10 {
     public void execute() throws IOException {
         System.out.println("Day 10: ");
         System.out.println("Part One result: " + getNumberOfDetectedAsteroids(readMapFromFile()));
-        System.out.println("Part Two result: " + getThe200thVaporizedAsteroid());
-    }
-
-    public int getThe200thVaporizedAsteroid() {
-        //tak mie moze byc bo odblokowywac trzeba dopiero jak usunie sie te blokujace asteoridy widok
-        //mozna wykorzystac wektory, w moemencie usuwania atseody, mozna isc wektorem i odblokowac kolejna za nia (jedna)
-        // czyli dodac do neighborposition ta asteroide
-       // stationAsteroid.resetNeighborsPositions();
-        stationAsteroid.move(sizeOfMap);
-
-//        List<Position> vaporisedasteroidspositions = func get
-//        Position the200thVaporisedAsteroidPosition =  vaporisedasteroidspositions. get(id == 200)
-        Position the200thVaporisedAsteroidPosition =  new Position(0,0);
-        return 100 * the200thVaporisedAsteroidPosition.getX() + the200thVaporisedAsteroidPosition.getY();
+        System.out.println("Part Two result: " + getThe200thVaporizedAsteroid(readMapFromFile()));
     }
 
     public int getNumberOfDetectedAsteroids(char[][] map) {
         List<Asteroid> asteroids = loadAsteroids(map);
         setNeighborAsteroidPositions(asteroids);
-        computeVectors(asteroids);
+        computeVectors(asteroids, true);
         computeVisibleAsteroids(asteroids, map.length);
         return calculateNumberOfDetectedAsteroids(asteroids);
     }
 
-    public int calculateNumberOfDetectedAsteroids(List<Asteroid> asteroids) {
+    public int getThe200thVaporizedAsteroid(char[][] map) {
+        List<Asteroid> asteroids = loadAsteroids(map);
+        Position the200thVaporisedAsteroidPosition = new Position(0,0);
+        boolean shouldLoop = true;
+
+        while(shouldLoop){
+            setNeighborAsteroidPositions(asteroids);
+            computeVectors(asteroids, true);
+            computeVisibleAsteroids(asteroids, map.length);
+            calculateNumberOfDetectedAsteroids(asteroids);
+
+            stationAsteroid.computeVectors(false);
+            stationAsteroid.computeAngles();
+            shouldLoop = stationAsteroid.runLaserAround(asteroids);
+            the200thVaporisedAsteroidPosition = stationAsteroid.getVaporisedAsteroidPosition();
+
+            clear(asteroids);
+            setStationAsteroidNeighborAsteroidPositions(asteroids);
+            computeVectors(asteroids, true);
+            computeVisibleAsteroids(asteroids, map.length);
+        }
+        return the200thVaporisedAsteroidPosition.getX() * 100 + the200thVaporisedAsteroidPosition.getY();
+    }
+
+    private void clear(List<Asteroid> asteroids){
+        for (Asteroid asteroid : asteroids) {
+            asteroid.clear();
+        }
+    }
+
+    private int calculateNumberOfDetectedAsteroids(List<Asteroid> asteroids) {
         int maxNumberOfDetectedAsteroids = 0;
 
         for (Asteroid asteroid : asteroids) {
@@ -53,19 +70,19 @@ public class Day10 {
         return maxNumberOfDetectedAsteroids;
     }
 
-    public void computeVisibleAsteroids(List<Asteroid> asteroids, int sizeOfMap) {
+    private void computeVisibleAsteroids(List<Asteroid> asteroids, int sizeOfMap) {
         for (Asteroid asteroid : asteroids) {
             asteroid.computeVisibleNeighbors(sizeOfMap);
         }
     }
 
-    public void computeVectors(List<Asteroid> asteroids) {
+    private void computeVectors(List<Asteroid> asteroids, boolean blocked) {
         for (Asteroid asteroid : asteroids) {
-            asteroid.computeVectors();
+            asteroid.computeVectors(blocked);
         }
     }
 
-    public void setNeighborAsteroidPositions(List<Asteroid> asteroids) {
+    private void setNeighborAsteroidPositions(List<Asteroid> asteroids) {
         for (Asteroid asteroid : asteroids) {
             List<Position> neighborsPositions = new ArrayList<>();
             for (Asteroid a : asteroids) {
@@ -77,7 +94,17 @@ public class Day10 {
         }
     }
 
-    public List<Asteroid> loadAsteroids(char[][] map) {
+    private void setStationAsteroidNeighborAsteroidPositions(List<Asteroid> asteroids) {
+            List<Position> neighborsPositions = new ArrayList<>();
+            for (Asteroid a : asteroids) {
+                if (!stationAsteroid.getPosition().equals(a.getPosition())) {
+                    neighborsPositions.add(new Position(a.getPosition()));
+                }
+            }
+        stationAsteroid.setNeighborsPositions(neighborsPositions);
+    }
+
+    private List<Asteroid> loadAsteroids(char[][] map) {
         List<Asteroid> asteroids = new ArrayList<>();
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {

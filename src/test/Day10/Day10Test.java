@@ -88,5 +88,30 @@ public class Day10Test {
                 "#.#.#.#####.####.###".toCharArray(),
                 "###.##.####.##.#..##".toCharArray()}));
     }
+
+    @Test
+    void checkThe200thVaporisedAsteroid() {
+        assertEquals(802, day10.getThe200thVaporizedAsteroid(new char[][]{
+                ".#..##.###...#######".toCharArray(),
+                "##.############..##.".toCharArray(),
+                ".#.######.########.#".toCharArray(),
+                ".###.#######.####.#.".toCharArray(),
+                "#####.##.#.##.###.##".toCharArray(),
+                "..#####..#.#########".toCharArray(),
+                "####################".toCharArray(),
+                "#.####....###.#.#.##".toCharArray(),
+                "##.#################".toCharArray(),
+                "#####.##.###..####..".toCharArray(),
+                "..######..##.#######".toCharArray(),
+                "####.##.####...##..#".toCharArray(),
+                ".#####..#.######.###".toCharArray(),
+                "##...#.##########...".toCharArray(),
+                "#.##########.#######".toCharArray(),
+                ".####.#.###.###.#.##".toCharArray(),
+                "....##.##.###..#####".toCharArray(),
+                ".#.#.###########.###".toCharArray(),
+                "#.#.#.#####.####.###".toCharArray(),
+                "###.##.####.##.#..##".toCharArray()}));
+    }
 }
 

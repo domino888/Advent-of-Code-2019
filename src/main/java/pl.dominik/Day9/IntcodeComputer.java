@@ -46,7 +46,6 @@ public class IntcodeComputer {
             switch (instruction[3]) {
                 case 1: {
                     setProgramByParameter(instruction[0], pointer + 3, getValueByParameter(instruction[2], pointer + 1) + getValueByParameter(instruction[1], pointer + 2));
-
                     pointer += 4;
                     break;
                 }

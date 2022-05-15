@@ -1,118 +1,55 @@
 package main.java.pl.dominik.Day10;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Asteroid {
 
     private final Position position;
-    private Position movedPosition = new Position(-1, -1);
-    private List<Position> neighborsPositions = new ArrayList<>();
-    private List<Position> vaporisedAsteroids = new ArrayList<>();
+    private Position vaporisedAsteroidPosition;
+    private List<Position> visibleNeighbors = new ArrayList<>();
+    private Map<Position, Double> visibleNeighborsWithAngles = new LinkedHashMap<>();
     private final Map<Position, Position> neighborsWithVectors = new HashMap<>();
+    int vaporisedAsteroidCounter = 0;
 
     public Asteroid(Position position) {
         this.position = position;
     }
 
-    public void move(int sizeOfMap) {
-
-
-        //to delete
-//        position.setNewPosition(4, 2);
-
-//        while (!neighborsPositions.isEmpty()) {
-        for (int i = 0; i < 4; i++) {
-            int upMax = position.getY();
-            int downMax = sizeOfMap - 1 - position.getY();
-            int leftMax = position.getX();
-            int rightMax = sizeOfMap - 1 - position.getX();
-
-            moveUp(upMax);
-            moveRight(rightMax);
-            moveDown(downMax);
-            moveLeft(leftMax);
-            System.out.println(vaporisedAsteroids.size());
-        }
+    public void clear() {
+        visibleNeighbors.clear();
+        visibleNeighborsWithAngles.clear();
+        neighborsWithVectors.clear();
     }
 
-    private void moveUpAndRight(int upMax, int rightMax) {
-        movedPosition.setNewPosition(position);
-        int up = this.getPosition().getY();
-        int right = this.getPosition().getX();
-
-        for (int i = 0; i < upMax; i++) {
-            up--;
-            movedPosition.setNewPosition(position.getX(), up);
-            if (neighborsPositions.removeIf(position -> Objects.equals(position, movedPosition))) {
-                vaporisedAsteroids.add(movedPosition);
-                break;
+    public boolean runLaserAround(List<Asteroid> asteroids) {
+        for (Map.Entry<Position, Double> entry : visibleNeighborsWithAngles.entrySet()) {
+            if(vaporisedAsteroidCounter < 200){
+                vaporisedAsteroidPosition = entry.getKey();
+                asteroids.removeIf(asteroid -> asteroid.getPosition().equals(vaporisedAsteroidPosition));
+                vaporisedAsteroidCounter++;
             }
         }
+        return vaporisedAsteroidCounter < 200;
     }
 
-    private void moveUp(int upMax) {
-        movedPosition.setNewPosition(position);
-        int up = this.getPosition().getY();
+    public void computeAngles() {
+        for (Map.Entry<Position, Position> entry : neighborsWithVectors.entrySet()) {
+            Position neighbor = entry.getKey();
+            Position vector = entry.getValue();
 
-        for (int i = 0; i < upMax; i++) {
-            up--;
-            movedPosition.setNewPosition(position.getX(), up);
-            if (neighborsPositions.removeIf(position -> Objects.equals(position, movedPosition))) {
-                vaporisedAsteroids.add(movedPosition);
-                break;
+            if (visibleNeighbors.contains(neighbor)) {
+                Double angle = getAngle(vector);
+                visibleNeighborsWithAngles.put(neighbor, angle);
             }
         }
-    }
-
-    private void moveDown(int downMax) {
-        movedPosition.setNewPosition(position);
-        int down = this.getPosition().getY();
-
-        for (int i = 0; i < downMax; i++) {
-            down++;
-            movedPosition.setNewPosition(position.getX(), down);
-            if (neighborsPositions.removeIf(position -> Objects.equals(position, movedPosition))) {
-                vaporisedAsteroids.add(movedPosition);
-                break;
-            }
-        }
-    }
-
-    private void moveRight(int rightMax) {
-        movedPosition.setNewPosition(position);
-        int right = this.getPosition().getX();
-
-        for (int i = 0; i < rightMax; i++) {
-            right++;
-            movedPosition.setNewPosition(right, position.getY());
-            if (neighborsPositions.removeIf(position -> Objects.equals(position, movedPosition))) {
-                vaporisedAsteroids.add(movedPosition);
-                break;
-            }
-        }
-    }
-
-    private void moveLeft(int leftMax) {
-        movedPosition.setNewPosition(position);
-        int left = this.getPosition().getX();
-
-        for (int i = 0; i < leftMax; i++) {
-            left--;
-            movedPosition.setNewPosition(left, position.getY());
-            if (neighborsPositions.removeIf(position -> Objects.equals(position, movedPosition))) {
-                vaporisedAsteroids.add(movedPosition);
-                break;
-            }
-        }
-    }
-
-    public void resetNeighborsPositions() {
-        neighborsPositions.clear();
-        neighborsPositions = new ArrayList<>(neighborsWithVectors.keySet());
-    }
-
-    public int getNumberOfVisibleNeighbors() {
-        return neighborsPositions.size();
+        visibleNeighborsWithAngles = visibleNeighborsWithAngles.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
     }
 
     public void computeVisibleNeighbors(int sizeOfMap) {
@@ -126,7 +63,7 @@ public class Asteroid {
 
             while (movedX >= 0 && movedX < sizeOfMap && movedY >= 0 && movedY < sizeOfMap) {
                 movedPosition.setNewPosition(movedX, movedY);
-                neighborsPositions.removeIf(key -> Objects.equals(key, movedPosition));
+                visibleNeighbors.removeIf(key -> Objects.equals(key, movedPosition));
 
                 movedX = movedX + vector.getX();
                 movedY = movedY + vector.getY();
@@ -134,19 +71,36 @@ public class Asteroid {
         }
     }
 
-    public void computeVectors() {
-        for (Position neighborPosition : neighborsPositions) {
-            int vectorX = neighborPosition.getX() - position.getX();
-            int vectorY = neighborPosition.getY() - position.getY();
+    public void computeVectors(boolean blocked) {
+        for (Position neighbor : visibleNeighbors) {
+            int vectorX = neighbor.getX() - position.getX();
+            int vectorY = neighbor.getY() - position.getY();
 
-            int greatestCommonDivisor = Math.abs(getGreatestCommonDivisor(vectorX, vectorY));
-
-            vectorX = vectorX / greatestCommonDivisor;
-            vectorY = vectorY / greatestCommonDivisor;
+            if (blocked) {
+                int greatestCommonDivisor = Math.abs(getGreatestCommonDivisor(vectorX, vectorY));
+                vectorX = vectorX / greatestCommonDivisor;
+                vectorY = vectorY / greatestCommonDivisor;
+            }
 
             Position vector = new Position(vectorX, vectorY);
-            neighborsWithVectors.put(neighborPosition, vector);
+            neighborsWithVectors.put(neighbor, vector);
         }
+    }
+
+    public void setNeighborsPositions(List<Position> neighborsPositions) {
+        this.visibleNeighbors = neighborsPositions;
+    }
+
+    private Double getAngle(Position vector) {
+        Position startVector = new Position(0, -position.getY());
+        Double numerator = (double) ((startVector.getX() * vector.getX()) + (startVector.getY() * vector.getY()));
+        Double denominator = Math.sqrt(Math.pow(startVector.getX(), 2D) + Math.pow(startVector.getY(), 2D)) * Math.sqrt(Math.pow(vector.getX(), 2D) + Math.pow(vector.getY(), 2D));
+        Double angle = (Math.acos(numerator / denominator) * 180) / Math.PI;
+
+        if (vector.getX() < 0) {
+            angle = 360 - angle;
+        }
+        return angle;
     }
 
     private int getGreatestCommonDivisor(int a, int b) {
@@ -156,11 +110,15 @@ public class Asteroid {
         return getGreatestCommonDivisor(b, a % b);
     }
 
-    public void setNeighborsPositions(List<Position> neighborsPositions) {
-        this.neighborsPositions = neighborsPositions;
+    public int getNumberOfVisibleNeighbors() {
+        return visibleNeighbors.size();
     }
 
     public Position getPosition() {
         return position;
+    }
+
+    public Position getVaporisedAsteroidPosition() {
+        return vaporisedAsteroidPosition;
     }
 }
