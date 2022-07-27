@@ -1,6 +1,7 @@
 package main.java;
 
 import main.java.pl.dominik.Day1.Day1;
+import main.java.pl.dominik.Day11.Day11;
 import main.java.pl.dominik.Day2.Day2;
 import main.java.pl.dominik.Day3.Day3;
 import main.java.pl.dominik.Day4.Day4;
@@ -61,6 +62,10 @@ public class Main {
                     executeDay10();
                     break;
                 }
+                case "11": {
+                    executeDay11();
+                    break;
+                }
                 case "q":
                     return;
                 default:
@@ -115,5 +120,9 @@ public class Main {
     private static void executeDay10() throws IOException {
         Day10 day10 = new Day10();
         day10.execute();
+    }
+    private static void executeDay11() throws Exception {
+        Day11 day11 = new Day11();
+        day11.execute();
     }
 }
