@@ -9,21 +9,23 @@ import java.util.*;
 
 public class Day11 {
 
+    Map<Position, Color> panels = new HashMap<>();
+
     public void execute() throws Exception {
         System.out.println("Day 11: ");
-        System.out.println("Part One result: " + getCountOfPaintedPanels());
+        System.out.println("Part One result: " + getCountOfPaintedPanels(Color.BLACK));
         System.out.println("Part Two result: ");
+        getRegistrationIdentifier().forEach(System.out::println);
     }
 
-    private int getCountOfPaintedPanels() throws Exception {
+    public int getCountOfPaintedPanels(Color startPanelColor) throws Exception {
 
-        Map<Position, Color> panels = new HashMap<>();
         IntcodeComputer intcodeComputer = new IntcodeComputer(readNumberFromFile());
         Position currentPosition = new Position(0, 0, Direction.UP);
 
         while (intcodeComputer.isRunning()) {
-            if(!panels.containsKey(currentPosition)){
-                panels.put(currentPosition, Color.BLACK);
+            if (!panels.containsKey(currentPosition)) {
+                panels.put(currentPosition, startPanelColor);
             }
             intcodeComputer.setInput(panels.get(currentPosition).ordinal());
             intcodeComputer.runIntCodeComputer();
@@ -37,7 +39,38 @@ public class Day11 {
         return panels.size();
     }
 
-    Position computeNewPosition(Position currentPosition, Direction directionToChange) throws Exception {
+    public List<String> getRegistrationIdentifier() throws Exception {
+        panels.clear();
+        getCountOfPaintedPanels(Color.WHITE);
+
+        int width = computeRegistrationWith();
+        int height = computeRegistrationHeight();
+
+        List<String> registrationIdentifier = new ArrayList<>();
+        char[][] area = new char[height][width];
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                area[i][j] = ' ';
+            }
+        }
+
+        for (Map.Entry<Position, Color> panel : panels.entrySet()) {
+            if (panel.getValue().equals(Color.WHITE)) {
+                area[-panel.getKey().getY()][panel.getKey().getX()] = '\u2588';
+            }
+        }
+        for (int i = 0; i < height; i++) {
+            String line = "";
+            for (int j = 0; j < width; j++) {
+                line = line.concat(String.valueOf(area[i][j]));
+            }
+            registrationIdentifier.add(line);
+        }
+        return registrationIdentifier;
+    }
+
+    private Position computeNewPosition(Position currentPosition, Direction directionToChange) throws Exception {
         switch (currentPosition.getDirection()) {
             case UP: {
                 if (directionToChange == Direction.LEFT)
@@ -66,6 +99,38 @@ public class Day11 {
             default:
                 throw new Exception("Bad position");
         }
+    }
+
+    private int computeRegistrationWith() {
+        int xMin = Integer.MAX_VALUE;
+        int xMax = Integer.MIN_VALUE;
+
+        for (Map.Entry<Position, Color> panel : panels.entrySet()) {
+            if (panel.getKey().getX() < xMin)
+                xMin = panel.getKey().getX();
+        }
+
+        for (Map.Entry<Position, Color> panel : panels.entrySet()) {
+            if (panel.getKey().getX() > xMax)
+                xMax = panel.getKey().getX();
+        }
+        return xMax - xMin + 1;
+    }
+
+    private int computeRegistrationHeight() {
+        int yMin = Integer.MAX_VALUE;
+        int yMax = Integer.MIN_VALUE;
+
+        for (Map.Entry<Position, Color> panel : panels.entrySet()) {
+            if (panel.getKey().getY() < yMin)
+                yMin = panel.getKey().getY();
+        }
+
+        for (Map.Entry<Position, Color> panel : panels.entrySet()) {
+            if (panel.getKey().getY() > yMax)
+                yMax = panel.getKey().getY();
+        }
+        return yMax - yMin + 1;
     }
 
     private Long[] readNumberFromFile() throws IOException {
