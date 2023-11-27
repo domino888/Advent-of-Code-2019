@@ -144,3 +144,6 @@ out/production/Advent of Code/main/java/pl/dominik/Day10/Position.class
 out/production/Advent of Code/main/resources/Day10/data.txt
 out/test/Advent of Code/Day10/Day10Test.class
 .idea/inspectionProfiles/Project_Default.xml
+/out/
+/out/test/
+.idea   
